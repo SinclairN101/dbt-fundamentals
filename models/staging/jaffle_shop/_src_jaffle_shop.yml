@@ -4,9 +4,14 @@ sources:
    schema: jaffle_shop
    tables:
      - name: orders
-     - name: customers    
-       config: 
-        freshness:
+     - name: customers
+       columns:
+         - name: id
+           data_tests:
+             - unique
+             - not_null
+       config:
+         freshness:
           warn_after: 
             count: 24 
             period: hour

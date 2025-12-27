@@ -1,0 +1,49 @@
+models:
+  - name: stg_jaffle_shop_customers
+    description: "Staging model for the jaffle_shop customers source data."
+    columns:
+      - name: customer_id
+        description: "The unique identifier for each customer."
+        data_tests:
+          - unique
+          - not_null      
+      - name: first_name
+        description: "The first name of the customer."
+      - name: last_name                  
+        description: "The last name of the customer."
+      - name: email
+        description: "The email address of the customer."
+      - name: created_at
+        description: "The timestamp when the customer record was created."
+      - name: updated_at
+        description: "The timestamp when the customer record was last updated."
+
+  - name: stg_jaffle_shop_orders
+    description: "Staging model for the jaffle_shop orders source data."
+    columns:
+      - name: order_id
+        description: "The unique identifier for each order."
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "The identifier for the customer who placed the order."
+        data_tests:
+          - relationships:
+             arguments:
+              to: ref('stg_jaffle_shop_customers')
+              field: customer_id
+      - name: order_date
+        description: "The date when the order was placed."  
+      - name: status
+        description: "The current status of the order."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['placed', 'shipped', 'completed', 'returned', 'return_pending'] 
+      - name: total_amount
+        description: "The total amount for the order."
+      - name: created_at
+        description: "The timestamp when the order record was created."
+      - name: updated_at
+        description: "The timestamp when the order record was last updated."  
